@@ -21,15 +21,18 @@ window.addEventListener('DOMContentLoaded', function () {
                 minutes = '00';
                 seconds = '00';
             }
-            if(seconds < 10) {
-                seconds = `0${seconds}`;
+
+            function checkLength(num) { 
+                if (num < 10) {
+                    num = `0${num}`;
+                } else {
+                    num = num;
+                }
+                return num;
             }
-            if (hours < 10) {
-                hours = `0${hours}`;
-            }
-            if (minutes < 10) {
-                minutes = `0${minutes}`;
-            }
+            seconds = checkLength(seconds);
+            hours = checkLength(hours);
+            minutes = checkLength(minutes);
             
             return {timeRemaining, hours, minutes, seconds};
         }
