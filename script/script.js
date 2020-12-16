@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     //timer
-    function countTimer(deadline) { 
+    const countTimer = (deadline) => {
         let timerHours = document.querySelector('#timer-hours'),
         timerMinutes = document.querySelector('#timer-minutes'),
         timerSeconds = document.querySelector('#timer-seconds');
@@ -22,14 +22,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 seconds = '00';
             }
 
-            function checkLength(num) { 
-                if (num < 10) {
-                    num = `0${num}`;
-                } else {
-                    num = num;
-                }
-                return num;
-            }
+            const checkLength = num => num < 10 ? `0${num}` : num;
             seconds = checkLength(seconds);
             hours = checkLength(hours);
             minutes = checkLength(minutes);
@@ -37,8 +30,8 @@ window.addEventListener('DOMContentLoaded', function () {
             return {timeRemaining, hours, minutes, seconds};
         }
 
-        function updateclock() { 
-            let timer = getTimeRemaining(),
+        const updateclock = () => {
+             let timer = getTimeRemaining(),
                 timerId;
             
             timerHours.textContent = timer.hours;
@@ -49,9 +42,10 @@ window.addEventListener('DOMContentLoaded', function () {
             } else {
                 clearInterval(timerId);
             }
-        }
+        };
+        
         updateclock();
-    }
+    };
 
     countTimer('30 december 2020');
 
