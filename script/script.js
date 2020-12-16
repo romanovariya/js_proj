@@ -86,15 +86,17 @@ window.addEventListener('DOMContentLoaded', function () {
             popupContent = document.querySelector('.popup-content');
 
         popupContent.style.position = 'absolute';
+        popupContent.style.left = '50%';
+        popupContent.style.transform = 'translateX(-50%)';
         popupBtn.forEach((elem) => {
             elem.addEventListener('click', () => {
                 popup.style.display = 'block';
-                if (screen.width > 768) {
+                if (document.body.clientWidth > 768) {
                     popupContent.animate([
                     { left: '-38%' }, 
-                    { left: '38%' }
+                    { left: '50%' }
                 ], {
-                    duration: 2000,
+                    duration: 700,
                     easing: 'ease-in-out',
                     iterations: 1
                 });
@@ -103,21 +105,7 @@ window.addEventListener('DOMContentLoaded', function () {
         });
 
         popupClose.addEventListener('click', () => {
-            if(screen.width >= 768) {
-                popupContent.animate([
-                    { left: '38%' }, 
-                    { left: '-38%' }
-                ], {
-                    duration: 2000,
-                    easing: 'ease-in-out',
-                    iterations: 1
-                });
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 2000);
-            } else {
-                popup.style.display = 'none';
-            }
+            popup.style.display = 'none';
         });
 
     };
