@@ -265,6 +265,44 @@ window.addEventListener('DOMContentLoaded', function () {
     };
 
     slider();
+
+
+    //image attribute change
+
+    const changeImage = () => {
+        const command = document.getElementById('command');
+        let srcAttr;
+
+        command.addEventListener('mouseover', (e) => {
+            if(e.target.matches('.command__photo')) {
+                srcAttr = e.target.getAttribute('src');
+                e.target.src = e.target.dataset.img;
+            }
+        });
+        command.addEventListener('mouseout', (e) => {
+            if(e.target.matches('.command__photo')) {
+                e.target.src = srcAttr;
+            }
+        });
+    };
+
+    changeImage();
+
+
+    //regexp
+
+    const validation = () => {
+        const calcBlock = document.querySelector('.calc-block');
+
+        calcBlock.addEventListener('input', (e) => {
+            if(e.target.matches('input')) {
+                e.target.value = e.target.value.replace(/[\D]/, '');
+            }
+        });
+    };
+
+    validation();
 });
+
 
  
