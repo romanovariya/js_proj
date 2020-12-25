@@ -109,7 +109,7 @@ class Validator{
         }
 
         if(!this.pattern.name){
-            this.pattern.name = /^[А-Яа-яЁё]$/;
+            this.pattern.name = /[А-Яа-яЁё]/;
         }
         
     }
