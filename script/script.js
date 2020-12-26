@@ -53,22 +53,21 @@ window.addEventListener('DOMContentLoaded', () => {
 	//меню
 
 	const toggleMenu = () => {
-
-		const btnMenu = document.querySelector('.menu'),
+		const body = document.querySelector('body'),
 			menu = document.querySelector('menu');
 
 		const handlerMenu = () => {
 			menu.classList.toggle('active-menu');
 		};
-		menu.addEventListener('click', event => {
+		body.addEventListener('click', event => {
 			const target = event.target;
-			if (target.matches('a')) {
+
+			if (target.closest('.menu') || target.closest('menu')) {
+				handlerMenu();
+			} else {
 				handlerMenu();
 			}
 		});
-
-		btnMenu.addEventListener('click', handlerMenu);
-
 	};
 
 	toggleMenu();
