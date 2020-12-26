@@ -387,105 +387,82 @@ window.addEventListener('DOMContentLoaded', () => {
 			xhr.send(JSON.stringify(body));
 		};
 
-		form.addEventListener('submit', event => {
+		const body = document.querySelector('body');
+		body.addEventListener('submit', event => {
 			event.preventDefault();
-			form.appendChild(statusMessage);
-			statusMessage.textContent = loadMessage;
-			const formData = new FormData(form);
-			const body = {};
-
-			formData.forEach((val, key) => {
-				body[key] = val;
-			});
-			postData(body, () => {
-				const inputs = form.querySelectorAll('input');
-				statusMessage.textContent = successMessage;
-				inputs.forEach(elem => {
-					elem.value = '';
-				});
-			}, error => {
-				statusMessage.textContent = errorMessage;
-				console.error(error);
-			});
-
-
-		});
-
-		form2.addEventListener('submit', event => {
-			event.preventDefault();
-			form2.appendChild(statusMessage);
-			statusMessage.textContent = loadMessage;
-			const formData = new FormData(form2);
-			const body = {};
-
-			formData.forEach((val, key) => {
-				body[key] = val;
-			});
-			postData(body, () => {
-				const inputs = form2.querySelectorAll('input');
-				statusMessage.textContent = successMessage;
-				inputs.forEach(elem => {
-					elem.value = '';
-				});
-			}, error => {
-				statusMessage.textContent = errorMessage;
-				console.error(error);
-			});
-		});
-
-		form3.addEventListener('submit', event => {
-			event.preventDefault();
-			form3.appendChild(statusMessage);
-			statusMessage.textContent = loadMessage;
-			statusMessage.style.cssText = `color: white;`;
-			const formData = new FormData(form3);
-			const body = {};
-
-			formData.forEach((val, key) => {
-				body[key] = val;
-			});
-			postData(body, () => {
-				const inputs = form3.querySelectorAll('input');
-				statusMessage.textContent = successMessage;
-				inputs.forEach(elem => {
-					elem.value = '';
-				});
-			}, error => {
-				statusMessage.textContent = errorMessage;
-				console.error(error);
-			});
-		});
-
-		form.addEventListener('input', event => {
 			const target = event.target;
 
-			if (target.classList.contains('form-phone')) {
-				target.value = target.value.replace(/[^0-9+]/ig, '');
-			} else if (target.classList.contains('form-name')) {
-				target.value = target.value.replace(/([^А-Яа-яёЁ ])/, '');
+			if (target.closest('#form1') || target.closest('#form2') || target.closest('#form3')) {
+				target.appendChild(statusMessage);
+				const inputs = target.querySelectorAll('input');
+				statusMessage.textContent = loadMessage;
+				const formData = new FormData(target);
+				const body = {};
+				formData.forEach((val, key) => {
+					body[key] = val;
+				});
+				postData(body, () => {
+					statusMessage.textContent = successMessage;
+					inputs.forEach(elem => {
+						elem.value = '';
+					});
+					setTimeout(() => {
+						target.removeChild(statusMessage);
+					}, 5000);
+				}, error => {
+					statusMessage.textContent = errorMessage;
+					console.error(error);
+				});
 			}
+
 		});
-		form2.addEventListener('input', event => {
-			const target = event.target;
+
+
+		const validateInput = target => {
 
 			if (target.classList.contains('form-phone')) {
 				target.value = target.value.replace(/[^0-9+]/ig, '');
-			} else if (target.classList.contains('top-form')) {
+			} else if (target.classList.contains('top-form') || target.classList.contains('form-name')) {
 				target.value = target.value.replace(/([^А-Яа-яёЁ ])/, '');
 			} else if (target.classList.contains('mess')) {
 				target.value = target.value.replace(/([^А-Яа-яёЁ ,.!?])/, '');
 			}
+
+		};
+
+		const checkEmpty = form => {
+			const inputs = form.querySelectorAll('input');
+			const formBtn = form.querySelector('button');
+			let empty = false;
+			formBtn.disabled = false;
+
+			inputs.forEach(elem => {
+				if (elem.value.trim() === '') {
+					formBtn.disabled = true;
+					empty = true;
+				}
+			});
+
+			if (empty === false) {
+				formBtn.disabled = false;
+			}
+		};
+
+		form.addEventListener('input', event => {
+			const target = event.target;
+			validateInput(target);
+			checkEmpty(form);
+		});
+		form2.addEventListener('input', event => {
+			const target = event.target;
+			validateInput(target);
+			checkEmpty(form2);
 		});
 		form3.addEventListener('input', event => {
 			const target = event.target;
-
-			if (target.classList.contains('form-phone')) {
-				target.value = target.value.replace(/[^0-9+]/ig, '');
-			} else if (target.classList.contains('form-name')) {
-				target.value = target.value.replace(/([^А-Яа-яёЁ ])/, '');
-			}
+			validateInput(target);
+			checkEmpty(form3);
 		});
-
 
 	};
 
