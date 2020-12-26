@@ -82,21 +82,25 @@ window.addEventListener('DOMContentLoaded', () => {
 			popupContent = document.querySelector('.popup-content');
 
 		popupContent.style.position = 'absolute';
-		popupContent.style.left = '50%';
+		popupContent.style.left = '-38%';
 		popupContent.style.transform = 'translateX(-50%)';
+
 		popupBtn.forEach(elem => {
 			elem.addEventListener('click', () => {
 				popup.style.display = 'block';
-				if (document.body.clientWidth > 768) {
-					popupContent.animate([
-						{ left: '-38%' },
-						{ left: '50%' }
-					], {
-						duration: 700,
-						easing: 'ease-in-out',
-						iterations: 1
-					});
-				}
+				const position = parseFloat(popupContent.style.left);
+
+				const startTime = new Date().getTime();
+				const movePopup = () => {
+					const now = new Date().getTime();
+					const newPosition = (position + ((now - startTime) / 1000) * 100);
+					popupContent.style.left = newPosition + "%";
+
+					if (newPosition < 50) {
+						requestAnimationFrame(movePopup);
+					}
+				};
+				movePopup();
 			});
 		});
 
@@ -105,14 +109,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			if (target.classList.contains('popup-close')) {
 				popup.style.display = 'none';
+				popupContent.style.left = '-38%';
 			} else {
 				target = target.closest('.popup-content');
 				if (!target) {
 					popup.style.display = 'none';
+					popupContent.style.left = '-38%';
 				}
 			}
-
-
 		});
 
 	};
