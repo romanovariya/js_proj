@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			if (target.closest('.menu') || target.closest('menu')) {
 				handlerMenu();
-			} else {
+			} else if (menu.classList.contains('active-menu')) {
 				handlerMenu();
 			}
 		});
