@@ -356,7 +356,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		};
 
-		calcBlock.addEventListener('change', event => {
+		calcBlock.addEventListener('input', event => {
 			const target = event.target;
 			if (target === calcType || target === calcSquare ||
 				target === calcDay || target === calcCount) {
