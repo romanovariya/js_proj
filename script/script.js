@@ -374,7 +374,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const sendForm = () => {
 		const errorMessage = 'Что-то пошло не так',
-			loadMessage = 'Загрузка...',
 			successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
 
 		const form = document.getElementById('form1'),
@@ -413,7 +412,20 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (target.closest('#form1') || target.closest('#form2') || target.closest('#form3')) {
 				target.appendChild(statusMessage);
 				const inputs = target.querySelectorAll('input');
-				statusMessage.textContent = loadMessage;
+				const preloader = document.createElement('div');
+				preloader.classList.add('sk-rotating-plane');
+				preloader.style.cssText = `width: 4em; height: 4em; margin: auto; background-color: #337ab7; 
+				-webkit-animation: sk-rotating-plane 1.2s infinite ease-in-out;
+				animation: sk-rotating-plane 1.2s infinite ease-in-out;`;
+				preloader.animate([
+					{ transform: 'perspective(120px) rotateX(0deg) rotateY(0deg)' },
+					{ transform: 'perspective(120px) rotateX(-180.1deg) rotateY(0deg)' },
+					{ transform: 'perspective(120px) rotateX(-180deg) rotateY(-179.9deg)' }
+				], {
+					duration: 2000,
+					iterations: Infinity
+				});
+				statusMessage.appendChild(preloader);
 				const formData = new FormData(target);
 				const body = {};
 				formData.forEach((val, key) => {
