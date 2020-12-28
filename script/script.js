@@ -352,7 +352,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				};
 				window.requestAnimationFrame(step);
 			};
-			animateValue(totalValue, 0, total, 2000);
+			animateValue(totalValue, 0, total, 1000);
 
 		};
 
