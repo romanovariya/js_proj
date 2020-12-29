@@ -385,23 +385,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		statusMessage.style.cssText = 'font-size: 2rem;';
 		form.appendChild(statusMessage);
 
-		const postData = body => new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			xhr.addEventListener('readystatechange', () => {
-
-				if (xhr.readyState !== 4) {
-					return;
-				}
-				if (xhr.status === 200) {
-					resolve(xhr.response);
-				} else {
-					reject(xhr.status);
-				}
-
-			});
-			xhr.open('POST', './server.php');
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.send(JSON.stringify(body));
+		const postData = body =>  fetch('./server.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
 		});
 
 		const body = document.querySelector('body');
@@ -431,7 +420,10 @@ window.addEventListener('DOMContentLoaded', () => {
 				body[key] = val;
 			});
 			postData(body)
-				.then(() => {
+				.then(response => {
+					if (response.status !== 200) {
+						throw new Error('status network not 200');
+					}
 					statusMessage.textContent = successMessage;
 					inputs.forEach(elem => {
 						elem.value = '';
