@@ -8,7 +8,7 @@ const sendForm = () => {
 
 
 	const statusMessage = document.createElement('div');
-	statusMessage.style.cssText = 'font-size: 2rem;';
+	statusMessage.style.cssText = `font-size: 2rem; color: #d7d7d7`;
 	form.appendChild(statusMessage);
 
 	const postData = body =>  fetch('./server.php', {
@@ -25,6 +25,7 @@ const sendForm = () => {
 		const target = event.target;
 
 		target.appendChild(statusMessage);
+		statusMessage.textContent = '';
 		const inputs = target.querySelectorAll('input');
 		const preloader = document.createElement('div');
 		preloader.classList.add('sk-rotating-plane');
@@ -49,14 +50,17 @@ const sendForm = () => {
 			.then(response => {
 				if (response.status !== 200) {
 					throw new Error('status network not 200');
+				} else {
+					statusMessage.removeChild(preloader);
+					statusMessage.textContent = successMessage;
+					inputs.forEach(elem => {
+						elem.value = '';
+					});
+					setTimeout(() => {
+						target.removeChild(statusMessage);
+					}, 3000);
 				}
-				statusMessage.textContent = successMessage;
-				inputs.forEach(elem => {
-					elem.value = '';
-				});
-				setTimeout(() => {
-					target.removeChild(statusMessage);
-				}, 5000);
+
 			})
 			.catch(error => {
 				statusMessage.textContent = errorMessage;

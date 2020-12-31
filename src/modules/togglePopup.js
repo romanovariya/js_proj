@@ -27,17 +27,28 @@ const togglePopup = () => {
 		});
 	});
 
+	const clearInput = () => {
+		const inputs = popupContent.querySelectorAll('input');
+
+		inputs.forEach(elem => {
+			elem.value = '';
+		});
+
+	};
+
 	popup.addEventListener('click', event => {
 		let target = event.target;
 
 		if (target.classList.contains('popup-close')) {
 			popup.style.display = 'none';
 			popupContent.style.left = '-38%';
+			clearInput();
 		} else {
 			target = target.closest('.popup-content');
 			if (!target) {
 				popup.style.display = 'none';
 				popupContent.style.left = '-38%';
+				clearInput();
 			}
 		}
 	});
