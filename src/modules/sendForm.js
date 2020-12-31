@@ -94,6 +94,16 @@ const sendForm = () => {
 			if (elem.value.trim() === '') {
 				formBtn.disabled = true;
 				empty = true;
+			} else if (elem.classList.contains('form-phone')) {
+				if (!(elem.value.length >= 6 && elem.value.length <= 11)) {
+					formBtn.disabled = true;
+					empty = true;
+				}
+			} else if (elem.classList.contains('form-name') || elem.classList.contains('top-form')) {
+				if (elem.value.length < 2) {
+					formBtn.disabled = true;
+					empty = true;
+				}
 			}
 		});
 
