@@ -29,7 +29,6 @@ const togglePopup = () => {
 
 	const clearInput = () => {
 		const inputs = popupContent.querySelectorAll('input');
-
 		inputs.forEach(elem => {
 			elem.value = '';
 		});

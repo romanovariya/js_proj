@@ -8,8 +8,10 @@ const sendForm = () => {
 
 
 	const statusMessage = document.createElement('div');
+	statusMessage.className = 'status-message';
 	statusMessage.style.cssText = `font-size: 2rem; color: #d7d7d7`;
 	form.appendChild(statusMessage);
+	statusMessage.textContent = '';
 
 	const postData = body =>  fetch('./server.php', {
 		method: 'POST',
